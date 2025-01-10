@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Interface</title>
+  <link rel="stylesheet" href="/css/product.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar collapsed">
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="blogs.html" class="menu-item">
+          <i class="fa-solid fa-blog"></i>
+          <span>Blogs</span>
+        </a>
+        <a href="cart.html" class="menu-item">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span>Cart</span>
+        </a>
+      </aside>
+    <main class="main-content">
+      <header class="header">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        <div class="breadcrumbs">Dashboard > Menu > Product</div>
+        <div class="contact-info">
+          <span><i class="fas fa-phone"></i> 0358711261</span>
+          <span><i class="fas fa-envelope"></i> tpic3c3@gmail.com</span>
+        </div>
+        <a href="promote.html" class="promote-btn">
+          <i class="fa-regular fa-handshake"></i> Nhờ Quảng Bá
+        </a>
+      </header>
+
+      <section class="search-section">
+       
+        <div class="search-bar">
+          <select>
+            <option>Vùng miền</option>
+          </select>
+          <input type="text" placeholder="Từ khóa bạn muốn tìm kiếm...">
+          <button class="search-btn">Tìm kiếm</button>
+        </div>
+        <div class="filter-options">
+          <select>
+            <option>Địa điểm</option>
+          </select>
+          <select>
+            <option>Loại mặt bằng</option>
+          </select>
+          <select>
+            <option>Giá cả</option>
+          </select>
+          <select>
+            <option>Diện tích mặt bằng</option>
+          </select>
+          <select>
+            <option>Hướng phong thủy</option>
+          </select>
+        </div>
+      </section>
+      
+
+      <section class="product-details">
+        <div class="product-header">
+          <h2>CHO THUÊ LOẠI MẶT BẰNG: KINH DOANH</h2>
+          <p>ID: 121Ac</p>
+        </div>
+        <div class="product-main">
+          <div class="product-image">
+            <div class="product-id">ID: 121Ac</div>
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="vertical-line"></div>
+          <div class="customer-form">
+            <h2 class="form-title">Liên hệ nhanh</h2>
+            <p class="form-description">Nhập thông tin và chúng tôi sẽ liên hệ với bạn ngay!</p>
+            <input type="text" placeholder="Tên khách hàng muốn thuê">
+            <input type="text" placeholder="Số điện thoại">
+            <button>Liên hệ cho tôi</button>
+        </div>
+        
+        </div>
+        <div class="price-info">
+          <h3>GIÁ THUÊ: 40M/THÁNG</h3>
+        </div>
+      </section>
+
+      <section class="product-description">
+        <h3>THÔNG TIN</h3>
+        <p>Nhà có tầng hầm gửi xe, lối đi riêng biệt hoàn toàn - thang riêng từ tầng hầm lên.</p>
+        <p>Vị trí trung tâm</p>
+      </section>
+
+      <section class="comments-section">
+        <h3>BÌNH LUẬN</h3>
+        <div class="comments">
+          <div class="comment">
+            <p><strong>Nguyen Van A</strong></p>
+            <p>Đất ở đây không tốt lắm!</p>
+          </div>
+        </div>
+        <div class="add-comment">
+          <input type="text" placeholder="Họ tên">
+          <input type="email" placeholder="Gmail">
+          <textarea placeholder="Nhận xét của bạn..."></textarea>
+          <button>Gửi</button>
+        </div>
+      </section>
+
+      <section class="similar-products">
+        <div class="product-grid">
+          <!-- Sản phẩm 1 -->
+          <a href="product_detail.html" class="product-item">
+            <div class="product-id">ID: 121Ac</div>
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+          <!-- Sản phẩm 2 -->
+          <a href="product_detail.html" class="product-item">
+            <div class="product-id">ID: 121Bc</div>
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+          <!-- Sản phẩm 3 -->
+          <a href="product_detail.html" class="product-item">
+            <div class="product-id">ID: 121Cc</div>
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+           <!-- Sản phẩm 4 -->
+           <a href="product.html" class="product-item">
+            <div class="product-id">ID: 121Dc</div>
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+  </script>
+</body>
+</html>

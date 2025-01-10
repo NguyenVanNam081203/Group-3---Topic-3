@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ Hàng Mặt Bằng</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar collapsed">
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="blogs.html" class="menu-item">
+          <i class="fa-solid fa-blog"></i>
+          <span>Blogs</span>
+        </a>
+        <a href="cart.html" class="menu-item">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span>Cart</span>
+        </a>
+      </aside>
+    <main class="main-content">
+      <header class="header" >
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- <div class="breadcrumbs">Dashboard > Menu</div> -->
+        <div class="contact-info">
+          <span><i class="fas fa-phone"></i> 0358711261</span>
+          <span><i class="fas fa-envelope"></i> tpic3c3@gmail.com</span>
+        </div>
+ 
+        <a href="promote.html" class="promote-btn">
+          <i class="fa-regular fa-handshake"></i> Nhờ Quảng Bá
+        </a>
+      </header>
+
+      <section class="search-section">
+        <div class="search-bar">
+          <select>
+            <option>Vùng miền</option>
+          </select>
+          <input type="text" placeholder="Từ khóa bạn muốn tìm kiếm...">
+          <button class="search-btn">Tìm kiếm</button>
+        </div>
+        <div class="filter-options">
+          <select>
+            <option>Địa điểm</option>
+          </select>
+          <select>
+            <option>Loại mặt bằng</option>
+          </select>
+          <select>
+            <option>Giá cả</option>
+          </select>
+          <select>
+            <option>Diện tích mặt bằng</option>
+          </select>
+          <select>
+            <option>Hướng phong thủy</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="cart-section">
+        <h2>Có 4 mặt bằng trong giỏ hàng</h2>
+        <div class="sorting">
+          <span>SẮP XẾP THEO</span>
+          <select>
+            <option>Khoảng Cách</option>
+          </select>
+          <select>
+            <option>Mới Nhất</option>
+          </select>
+          <select>
+            <option>Giá</option>
+          </select>
+        </div>
+        <div class="comparison-container">
+          <table>
+            <tr>
+              <th>Vị trí</th>
+              <td class="image-cell"><img src="https://via.placeholder.com/100" alt="Ảnh 1"></td>
+              <td class="image-cell"><img src="https://via.placeholder.com/100" alt="Ảnh 2"></td>
+              <td class="image-cell"><img src="https://via.placeholder.com/100" alt="Ảnh 3"></td>
+              <td class="image-cell"><img src="https://via.placeholder.com/100" alt="Ảnh 4"></td>
+            </tr>
+            <tr>
+              <th>Giá</th>
+              <td>Chi tiết 1</td>
+              <td>Chi tiết 2</td>
+              <td>Chi tiết 3</td>
+              <td>Chi tiết 4</td>
+            </tr>
+            <tr>
+              <th>Mô tả</th>
+              <td>Chi tiết 1</td>
+              <td>Chi tiết 2</td>
+              <td>Chi tiết 3</td>
+              <td>Chi tiết 4</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+  </script>
+</body>
+</html>

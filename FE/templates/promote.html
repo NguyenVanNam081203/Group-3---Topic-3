@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhờ Quảng Bá</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+    }
+
+    .modal {
+      display: none; 
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      text-align: left;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-50px);
+      transition: transform 0.4s ease;
+    }
+
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .modal-header .close {
+      background-color: transparent;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #333;
+      transition: color 0.3s;
+    }
+
+    .modal-header .close:hover {
+      color: #e74c3c;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-actions {
+      text-align: right;
+    }
+
+    .form-actions button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-actions button:hover {
+      background-color: #2980b9;
+    }
+
+    .form-actions button:active {
+      background-color: #1f6f8b;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Modal chứa form -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Nhờ Quảng Bá</h2>
+      <button class="close" id="closeModal">&times;</button>
+    </div>
+    <form id="promotionForm">
+      <div class="form-group">
+        <label for="name">Họ và tên:</label>
+        <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
+      </div>
+      <div class="form-group">
+        <label for="location">Vị trí mặt bằng:</label>
+        <input type="text" id="location" name="location" placeholder="Nhập vị trí mặt bằng" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Giá thuê:</label>
+        <input type="number" id="price" name="price" placeholder="Nhập giá thuê" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" placeholder="Nhập mô tả chi tiết"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="image">Hình ảnh mặt bằng:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit">Gửi</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Lấy các phần tử
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('closeModal');
+  const form = document.getElementById('promotionForm');
+
+  // Hàm mở modal với hiệu ứng
+  function openModal() {
+    modal.classList.add('show');
+  }
+
+  // Hàm đóng modal với hiệu ứng
+  function closeModalEffect() {
+    modal.classList.remove('show');
+  }
+
+  // Đóng modal khi click vào nút đóng
+  closeModal.addEventListener('click', closeModalEffect);
+
+  // Đóng modal khi click ra ngoài vùng modal
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModalEffect();
+    }
+  });
+
+  // Xử lý submit form
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const location = document.getElementById('location').value;
+    const price = document.getElementById('price').value;
+    const description = document.getElementById('description').value;
+    const image = document.getElementById('image').files[0];
+
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        alert(`Thông tin đã được gửi:
+- Họ và tên: ${name}
+- Vị trí mặt bằng: ${location}
+- Giá thuê: ${price}
+- Mô tả: ${description}
+- Hình ảnh: ${reader.result.slice(0, 50)}...`);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      alert('Vui lòng tải lên hình ảnh!');
+    }
+
+    closeModalEffect();
+    form.reset(); // Xóa dữ liệu form sau khi gửi
+  });
+
+  // Mở modal khi trang được tải
+  window.addEventListener('load', openModal);
+</script>
+
+</body>
+</html>

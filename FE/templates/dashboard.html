@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Listing</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+    <aside class="sidebar collapsed">
+      <a href="dashboard.html" class="menu-item">
+        <i class="fa-solid fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="blogs.html" class="menu-item">
+        <i class="fa-solid fa-blog"></i>
+        <span>Blogs</span>
+      </a>
+      <a href="cart.html" class="menu-item">
+        <i class="fa-solid fa-shopping-cart"></i>
+        <span>Cart</span>
+      </a>
+    </aside>
+    
+    <main class="main-content">
+      <header class="header" >
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- <div class="breadcrumbs">Dashboard > Menu</div> -->
+        <div class="contact-info">
+          <span><i class="fas fa-phone"></i> 0358711261</span>
+          <span><i class="fas fa-envelope"></i> tpic3c3@gmail.com</span>
+        </div>
+        <a href="promote.html" class="promote-btn">
+          <i class="fa-regular fa-handshake"></i> Nhờ Quảng Bá
+        </a>
+      </header>
+
+<section class="search-section " >
+       
+  <div class="search-bar">
+    <select>
+      <option>Vùng miền</option>
+    </select>
+    <input type="text" placeholder="Từ khóa bạn muốn tìm kiếm...">
+    <button class="search-btn">Tìm kiếm</button>
+  </div>
+  <div class="filter-options">
+    <select>
+      <option>Địa điểm</option>
+    </select>
+    <select>
+      <option>Loại mặt bằng</option>
+    </select>
+    <select>
+      <option>Giá cả</option>
+    </select>
+    <select>
+      <option>Diện tích mặt bằng</option>
+    </select>
+    <select>
+      <option>Hướng phong thủy</option>
+    </select>
+  </div>
+</section>
+
+<section class="results-section">
+  <h2>Đã tìm thấy 12,200 sản phẩm</h2>
+  <hr class="custom-line">
+  <div class="sorting">
+    <span>SẮP XẾP THEO</span>
+    <select>
+      <option>Khoảng Cách</option>
+    </select>
+    <select>
+      <option>Mới Nhất</option>
+    </select>
+    <select>
+      <option>Giá</option>
+    </select>
+  </div>
+  <div class="product-grid">
+    <!-- Sản phẩm 1 -->
+    <a href="product_detail.html" class="product-item">
+      <div class="product-id">ID: 121Ac</div>
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <!-- Sản phẩm 2 -->
+    <a href="product_detail.html" class="product-item">
+      <div class="product-id">ID: 121Bc</div>
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <!-- Sản phẩm 3 -->
+    <a href="product_detail.html" class="product-item">
+      <div class="product-id">ID: 121Cc</div>
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+     <!-- Sản phẩm 4 -->
+     <a href="product.html" class="product-item">
+      <div class="product-id">ID: 121Dc</div>
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+  </div>
+</section>
+
+    </main>
+  </div>
+  
+  </div>
+  
+  <script>
+    // Lấy phần tử đóng modal
+    const closeModal = document.getElementById('closeModal');
+    const form = document.getElementById('promotionForm');
+  
+    // Đóng modal khi click vào nút đóng
+    closeModal.addEventListener('click', () => {
+      document.querySelector('.modal').style.display = 'none';
+    });
+  
+    // Xử lý submit form
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+  
+      const name = document.getElementById('name').value;
+      const location = document.getElementById('location').value;
+      const price = document.getElementById('price').value;
+      const description = document.getElementById('description').value;
+      const image = document.getElementById('image').files[0];
+  
+      if (image) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          alert(`Thông tin đã được gửi:
+  - Họ và tên: ${name}
+  - Vị trí mặt bằng: ${location}
+  - Giá thuê: ${price}
+  - Mô tả: ${description}
+  - Hình ảnh: ${reader.result.slice(0, 50)}...`);
+        };
+        reader.readAsDataURL(image);
+      } else {
+        alert('Vui lòng tải lên hình ảnh!');
+      }
+  
+      // Đóng modal và reset form
+      document.querySelector('.modal').style.display = 'none';
+      form.reset();
+    });
+  </script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+  </script>
+  
+</body>
+</html>

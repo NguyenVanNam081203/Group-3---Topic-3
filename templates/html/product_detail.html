@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Interface</title>
+  <link rel="stylesheet" href="/static/css/product.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar collapsed">
+      <a href="/dashboard" class="menu-item">
+        <i class="fa-solid fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+        <a href="/blogs" class="menu-item">
+          <i class="fa-solid fa-blog"></i>
+          <span>Blogs</span>
+      </a>
+      <a href="/cart" class="menu-item">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span>Cart</span>
+      </a>
+      </aside>
+    <main class="main-content">
+      <header class="header">
+        <!-- <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+          </button> -->
+        <div class="breadcrumbs">Dashboard > Menu > Product</div>
+        <div class="contact-info">
+          <!-- <span><i class="fas fa-phone"></i> 0358711261</span>
+          <span><i class="fas fa-envelope"></i> tpic3c3@gmail.com</span> -->
+        </div>
+        <a href="promote.html" class="promote-btn">
+          <i class="fa-regular fa-handshake"></i> Nhờ Quảng Bá
+        </a>
+      </header>
+
+      <section class="search-section">
+
+        <div class="search-bar">
+          <select>
+            <option>Vùng miền</option>
+          </select>
+          <input type="text" placeholder="Từ khóa bạn muốn tìm kiếm...">
+          <button class="search-btn">Tìm kiếm</button>
+        </div>
+        <div class="filter-options">
+          <select>
+            <option>Địa điểm</option>
+          </select>
+          <select>
+            <option>Loại mặt bằng</option>
+          </select>
+          <select>
+            <option>Giá cả</option>
+          </select>
+          <select>
+            <option>Diện tích mặt bằng</option>
+          </select>
+        </div>
+      </section>
+
+
+      <section class="product-details">
+        <div class="product-header">
+          <h2>CHO THUÊ LOẠI MẶT BẰNG: KINH DOANH</h2>
+        </div>
+        <div class="product-main">
+          <div class="product-image" style="position: relative; width: 300px; height: 300px; overflow: hidden; border-radius: 8px;">
+            <div class="product-id" style="position: absolute; top: 8px; left: 8px; background: white; padding: 4px 8px; border-radius: 4px; font-size: 14px;">{{mat_bang['mat_bang_id']}}</div>
+            <img src="{{ url_for('static', filename='dataImage/' + mat_bang['hinh_anh']|string) }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+            <i class="fas fa-shopping-cart" style="position: absolute; bottom: 8px; right: 8px; color: white; font-size: 18px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);"></i>
+        </div>
+        
+          <div class="vertical-line"></div>
+          <div class="customer-form">
+            <h2 class="form-title">Liên hệ nhanh</h2>
+            <p class="form-description">Nhập thông tin và chúng tôi sẽ liên hệ với bạn ngay!</p>
+            <form id="contactForm">
+                <input type="text" name="ten_khach_hang" placeholder="Tên khách hàng muốn thuê" required>
+                <input type="text" name="so_dien_thoai" placeholder="Số điện thoại" required>
+                <button type="submit">Liên hệ cho tôi</button>
+            </form>
+        </div>
+        
+        <!-- Thêm script -->
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn không cho form gửi yêu cầu mặc định
+        
+                const formData = new FormData(this);
+                const matBangId = "{{ mat_bang['mat_bang_id'] }}"; // Thay bằng ID thực tế
+        
+                fetch(`/add-contact/${matBangId}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Thông báo thành công
+                    } else {
+                        alert(data.message); // Thông báo lỗi
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Đã xảy ra lỗi không xác định!');
+                });
+            });
+        </script>
+        
+        
+        </div>
+        <div class="price-info">
+          <h3>GIÁ THUÊ: {{mat_bang['gia']|int}}vnđ/1 tháng</h3>
+        </div>
+      </section>
+
+      <section class="product-description">
+        <h3>THÔNG TIN</h3>
+        <p>{{mat_bang['mo_ta']}}</p>
+      </section>
+      <section class="map-section">
+        <div id="map" style="width: 50%; height: 200px;"></div>
+      </section>
+       <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+  <script>
+    // Khai báo API token Mapbox
+    mapboxgl.accessToken = 'pk.eyJ1IjoiMjE1MTE2MDUyNSIsImEiOiJjbTVueHk1NHQwaGYwMmxwd3EwOTJ3c2U5In0.FUaCR0PxF1ZmviEkw5w2JA';
+
+    // Khởi tạo bản đồ Mapbox
+    var map = new mapboxgl.Map({
+      container: 'map',  // ID của phần tử chứa bản đồ
+      style: 'mapbox://styles/mapbox/streets-v11',  // Chọn kiểu bản đồ
+      center: ["{{ longitude }}", "{{ latitude }}"],
+      zoom: 15  // Mức zoom của bản đồ
+    });
+
+    // Thêm marker vào bản đồ tại tọa độ đã cho
+    new mapboxgl.Marker()
+      .setLngLat(["{{ longitude }}", "{{ latitude }}"])  // Tọa độ (Kinh độ, Vĩ độ)
+      .addTo(map);
+      
+  </script>
+  <section class="comments-section">
+    <h3>BÌNH LUẬN</h3>
+    <div class="comments">
+      {% for comment in comments %}
+        <div class="comment">
+          <p><strong>{{ comment['user_name'] }}</strong></p>
+          <p>{{ comment['comment'] }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="add-comment">
+      <form action="{{ url_for('add_comment', product_id=mat_bang['mat_bang_id']) }}" method="POST">
+        <input type="text" name="user_name" placeholder="Họ tên" required>
+        <input type="email" name="email" placeholder="Gmail" required>
+        <textarea name="comment" placeholder="Nhận xét của bạn..." required></textarea>
+        <button type="submit">Gửi</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="similar-products">
+  <h3>CÁC MẶT BẰNG TƯƠNG TỰ</h3>
+  <div class="product-grid">
+    {% if similar_mats %}
+        {% for similar in similar_mats %}
+            <a href="{{ url_for('product_detail', product_id=similar['mat_bang_id']) }}" class="product-item">
+                <div class="product-id">ID: {{ similar['mat_bang_id'] }}</div>
+                <img src="{{ url_for('static', filename='dataImage/' + similar['hinh_anh']) }}" width="100" alt="Image of {{ similar['mat_bang_id'] }}">
+                <!-- <p>Thông tin không có sẵn.</p>  -->
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>Không có mặt bằng tương tự nào.</p>
+    {% endif %}
+  </div>
+</section>
+
+</main>
+</div>
+<script>
+function toggleSidebar() {
+const sidebar = document.querySelector('.sidebar');
+sidebar.classList.toggle('collapsed');
+}
+</script>
+</body>
+</html>

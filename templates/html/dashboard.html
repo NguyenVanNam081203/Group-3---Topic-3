@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Listing</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar collapsed">
+      <a href="/dashboard" class="menu-item">
+        <i class="fa-solid fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+        <a href="/blogs" class="menu-item">
+          <i class="fa-solid fa-blog"></i>
+          <span>Blogs</span>
+      </a>
+      <a href="/cart" class="menu-item">
+          <i class="fa-solid fa-shopping-cart"></i>
+          <span>Cart</span>
+      </a>
+    
+    </aside>    
+    
+    <main class="main-content">
+      <header class="header" >
+        <!-- <div class="breadcrumbs">Dashboard > Menu</div> -->
+         <h1>Dashboard</h1>
+        <div class="contact-info">
+          <!-- <span><i class="fas fa-phone"></i> 0358711261</span>
+          <span><i class="fas fa-envelope"></i> tpic3c3@gmail.com</span> -->
+        </div>
+        <a href="/promote" class="promote-btn">
+          <i class="fa-regular fa-handshake"></i> Nhờ Quảng Bá
+        </a>
+      </header>
+      
+      <section class="search-section">
+        <div class="search-bar">
+          <select id="region-select" onchange="filterByRegion()">
+            <option value="" {% if not selected_mien %}selected{% endif %}>Vùng miền</option>
+            <option value="Bắc" {% if selected_mien == 'Bắc' %}selected{% endif %}>Bắc</option>
+            <option value="Trung" {% if selected_mien == 'Trung' %}selected{% endif %}>Trung</option>
+            <option value="Nam" {% if selected_mien == 'Nam' %}selected{% endif %}>Nam</option>
+          </select>    
+      
+          <input type="text" id="search-keyword" placeholder="Từ khóa bạn muốn tìm kiếm...">
+          <button id="search-button" class="search-btn" onclick="search()">Tìm kiếm</button>
+        </div>
+      
+        <div class="filter-options">
+          <select id="location-select" name="thanh_pho">
+            <option value="">Chọn địa điểm</option>
+            {% for province in provinces %}
+            <option value="{{ province }}" {% if province == selected_thanh_pho %}selected{% endif %}>
+              {{ province }}
+            </option>
+            {% endfor %}
+          </select>
+      
+          <!-- Dropdown loại mặt bằng -->
+          <select id="property-type-select" name="loai_mat_bang">
+            <option value="">Loại mặt bằng</option>
+            <option value="Chung cư" {% if selected_mien == 'Chung cư' %}selected{% endif %}>Chung cư</option>
+            <option value="Căn Hộ" {% if selected_mien == 'Căn Hộ' %}selected{% endif %}>Căn Hộ</option>
+            <option value="Trọ" {% if selected_mien == 'Trọ' %}selected{% endif %}>Trọ</option>
+            <option value="Nhà ở" {% if selected_mien == 'Nhà ở' %}selected{% endif %}>Nhà ở</option>
+          </select>
+                
+          <!-- Dropdown giá -->
+          <select id="price-select" name="price">
+            <option value="">Giá cả</option>
+            <option value="0tr-10tr" {% if selected_price_range == '0tr-10tr' %}selected{% endif %}>0tr-10tr</option>
+            <option value="10tr-20tr" {% if selected_price_range == '10tr-20tr' %}selected{% endif %}>10tr-20tr</option>
+            <option value="20tr-50tr" {% if selected_price_range == '20tr-50tr' %}selected{% endif %}>20tr-50tr</option>
+            <option value=">50tr" {% if selected_price_range == '>50tr' %}selected{% endif %}>>50tr</option>
+          </select>
+    
+          
+    <!-- Dropdown lọc diện tích -->
+    <select id="area-select" name="area">
+      <option value="">Diện tích mặt bằng</option>
+      <option value="10m² - 30m²" {% if selected_area_range == '10m² - 30m²' %}selected{% endif %}>10m² - 30m²</option>
+      <option value="30m² - 50m²" {% if selected_area_range == '30m² - 50m²' %}selected{% endif %}>30m² - 50m²</option>
+      <option value="50m² - 100m²" {% if selected_area_range == '50m² - 100m²' %}selected{% endif %}>50m² - 100m²</option>
+      <option value=">100m²" {% if selected_area_range == '>100m²' %}selected{% endif %}>>100m²</option>
+    </select>
+
+      
+          <button id="clear-filters" style="display: none;" onclick="clearFilters()">Xóa bộ lọc</button>
+        </div>
+      </section>
+      
+
+<section class="results-section">
+  <h2>Hiện đang có {{ count }} mặt bằng</h2>
+  <hr class="custom-line">
+  <div class="sorting">
+    <span>SẮP XẾP THEO</span>
+    
+    <!-- Khoảng cách và Mới Nhất giữ nguyên -->
+    <!-- <select id="sort-by-distance">
+      <option>Khoảng Cách</option>
+    </select> -->
+    <!-- <select id="sort-by-latest">
+      <option>Mới Nhất</option>
+    </select> -->
+    
+    <!-- Phần Giá được sửa lại với nút reset -->
+    <div class="relative inline-block">
+      <select id="sort-by-price" class="appearance-none py-2 px-4 rounded-lg text-gray-700">
+        <option value="" {% if not selected_sort_order %}selected{% endif %}>Giá</option>
+        <option value="asc" {% if selected_sort_order == 'asc' %}selected{% endif %}>Tăng dần</option>
+        <option value="desc" {% if selected_sort_order == 'desc' %}selected{% endif %}>Giảm dần</option>
+      </select>
+    
+      <!-- Nút reset "X" -->
+      {% if selected_sort_order %}
+      <button id="reset-price" class="text-xl cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 text-gray-800 rounded-full w-6 h-6 flex items-center justify-center">
+        ×
+      </button>
+      {% endif %}
+    </div>
+    
+  </div>
+
+  
+ <!-- Hiển thị sản phẩm -->
+<div class="product-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 mt-2" id="product-grid">
+  {% for mat_bang in mat_bangs %}
+<a href="{{ url_for('product_detail', product_id=mat_bang['mat_bang_id']) }}" class="product-item bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden hover:shadow-lg transform hover:scale-105 transition-all duration-200 ease-in-out" data-price="{{ mat_bang['gia'] }}">
+    <div class="product-id absolute top-0 left-0 p-2 bg-gray-100 text-center text-sm text-gray-700 font-semibold">{{ mat_bang['mat_bang_id'] }}</div>
+    <img src="{{ url_for('static', filename='dataImage/' + mat_bang['hinh_anh']|string) }}" class="w-full h-48 object-cover" alt="Product Image">
+    <div class="p-4">
+        <p class="text-lg font-semibold text-gray-800 truncate">Giá: {{ '{:,.0f}'.format(mat_bang['gia'])|replace(',', '.') }} VNĐ/1 tháng</p>
+        <p class="text-sm text-gray-600 truncate">Diện tích: {{ mat_bang['dien_tich']|int }} m²</p>
+        <p class="text-sm text-gray-600 truncate">{{ mat_bang['loai_mat_bang'] }}</p>
+        <p class="text-sm text-gray-600 truncate">{{ mat_bang['thanh_pho'] }}</p>
+    </div>
+</a>
+{% endfor %}
+
+</div>
+
+<div class="pagination mt-8 flex justify-center items-center space-x-4">
+  {% if page > 1 %}
+    <a href="?page={{ page - 1 }}&mien={{ selected_mien or '' }}&thanh_pho={{ selected_thanh_pho or '' }}&loai_mat_bang={{ selected_loai_mat_bang or '' }}&price={{ selected_price_range or '' }}&area={{ selected_area_range or '' }}&keyword={{ search_keyword or '' }}&sort_order={{ selected_sort_order or '' }}" class="px-4 py-2 text-white bg-blue-500 text-gray-700 rounded-lg hover:bg-gray-500 transition duration-200">
+      Trang trước
+    </a>
+  {% endif %}
+
+  <span class="text-lg text-gray-700">Trang {{ page }} của {{ total_pages }}</span>
+
+  {% if page < total_pages %}
+    <a href="?page={{ page + 1 }}&mien={{ selected_mien or '' }}&thanh_pho={{ selected_thanh_pho or '' }}&loai_mat_bang={{ selected_loai_mat_bang or '' }}&price={{ selected_price_range or '' }}&area={{ selected_area_range or '' }}&keyword={{ search_keyword or '' }}&sort_order={{ selected_sort_order or '' }}" class="px-4 py-2 text-white bg-blue-500 text-gray-700 rounded-lg hover:bg-gray-500 transition duration-200">
+      Trang sau
+    </a>
+  {% endif %}
+</div>
+
+</section>
+
+    </main>
+
+    <div class="fixed bottom-5 right-5">
+      <!-- Bot Icon -->
+      <button id="chatbot-icon" class="rounded-full shadow-lg hover:bg-blue-600">
+        <div class="h-12 w-12 rounded-full overflow-hidden border-0">
+          <img src="/static/image/botai.avif" alt="Bot Icon" class="h-full w-full object-cover">
+        </div>
+      </button>
+      
+      <!-- Chat Box -->
+      <div id="chatbox" class="hidden fixed bottom-16 right-5 w-96 h-96 bg-white rounded-lg shadow-lg border border-gray-300">
+        <div class="flex justify-between items-center bg-blue-500 text-white px-4 py-2 rounded-t-lg">
+          <h2 class="font-semibold">Chat với AI</h2>
+          <button id="close-chatbox" class="text-white">✕</button>
+        </div>
+        <div id="chat-content" class="p-4 h-72 overflow-y-auto">
+          <div class="text-gray-600">Bot: Xin chào! Tôi có thể giúp gì cho bạn?</div>
+        </div>
+        <div class="border-t border-gray-200 flex items-center p-2">
+          <input id="user-message-input" type="text" placeholder="Nhập tin nhắn..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button id="send-message-button" class="ml-2 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600">Gửi</button>
+        </div>
+      </div>
+    </div>
+    
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/promote.css">
+  <title>Nhờ Quảng Bá</title>
+</head>
+<body>
+
+<!-- Modal chứa form -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Nhờ Quảng Bá</h2>
+      <button class="close" id="closeModal">&times;</button>
+    </div>
+    <form id="promotionForm" action="/submit_promotion" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Họ và tên:</label>
+        <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
+      </div>
+      <div class="form-group">
+        <label for="location">Vị trí mặt bằng:</label>
+        <input type="text" id="location" name="location" placeholder="Nhập vị trí mặt bằng" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Giá thuê:</label>
+        <input type="number" id="price" name="price" placeholder="Nhập giá thuê" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" placeholder="Nhập mô tả chi tiết"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="image">Hình ảnh mặt bằng:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit">Gửi</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

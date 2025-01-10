@@ -1,0 +1,173 @@
+/* General styles */
+*{
+  box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .container {
+    display: flex;
+  }
+  
+  /* Cấu hình ban đầu: ẩn sidebar khi collapsed */
+.sidebar.collapsed {
+  width: 50px; /* hoặc giá trị nhỏ phù hợp với chiều rộng bạn muốn */
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Khi hover vào sidebar, mở rộng sidebar */
+.sidebar.collapsed:hover {
+  width: 250px; /* hoặc giá trị chiều rộng lớn hơn khi sidebar được mở rộng */
+}
+
+/* Đảm bảo menu items được hiển thị đúng */
+.menu-item {
+  padding: 10px;
+  text-align: left;
+  display: block;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .menu-item span {
+  display: none; /* Ẩn văn bản khi sidebar thu gọn */
+}
+
+.sidebar.collapsed:hover .menu-item span {
+  display: inline; /* Hiển thị văn bản khi hover */
+}
+
+
+.menu-item {
+  padding: 12px 15px;
+  margin: 8px 0;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item i {
+  font-size: 20px;
+  color: #666;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.menu-item:hover i {
+  color: #007bff;
+}
+
+.menu-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.sidebar.collapsed .menu-item i {
+  transform: scale(1.2);
+}
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .breadcrumbs {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .contact-info span {
+    margin-right: 15px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .promote-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .promote-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Form Section */
+  .form-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .form-section h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .form-container {
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .form-group {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .form-group input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f5f5f5;
+  }
+  
+  .submit-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #218838;
+  }

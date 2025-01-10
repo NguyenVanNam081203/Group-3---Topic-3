@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accept.css') }}">
+</head>
+
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <nav>
+            <a href="#" id="post-review">
+                <i class="fas fa-file-alt"></i>
+                <span>Post</span>
+            </a>
+            <a href="#" id="user-contact">
+                <i class="fas fa-users"></i>
+                <span>User</span>
+            </a>
+            <a href="/logout" id="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+            
+        </nav>
+    </aside>
+
+    <!-- Header -->
+    <header id="header">
+        Admin
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div id="page-content">
+            <h2 class="text-lg font-semibold text-gray-700">Welcome! Choose a section from the sidebar.</h2>
+        </div>
+
+
+        <section id="post-review-section" style="display: none;">
+            <h2 class="text-lg font-semibold text-gray-700">Post Quảng Bá</h2>
+            <div class="mt-4">
+    <div class="p-4 bg-white shadow rounded mb-4">
+        {% for row in danh_sach_quang_ba %}
+        <form method="POST" action="{{ url_for('approve_promotion') }}">
+            <div>
+                <label for="customer_name_{{ row[0] }}">Họ tên khách:</label>
+                <input type="text" id="customer_name_{{ row[0] }}" name="customer_name" value="{{ row[0] }}" class="border p-2 mb-2 w-full" readonly>
+            </div>
+
+            <div>
+                <label for="location_{{ row[0] }}">Vị trí mặt bằng:</label>
+                <input type="text" id="location_{{ row[0] }}" name="location" value="{{ row[1] }}" class="border p-2 mb-2 w-full" readonly>
+            </div>
+
+            <div>
+                <label for="rent_price_{{ row[0] }}">Giá thuê:</label>
+                <input type="text" id="rent_price_{{ row[0] }}" name="rent_price" value="{{ row[2] }}" class="border p-2 mb-2 w-full" readonly>
+            </div>
+
+            <div>
+                <label for="description_{{ row[0] }}">Mô tả:</label>
+                <textarea id="description_{{ row[0] }}" name="description" class="border p-2 mb-2 w-full" rows="4" readonly>{{ row[3] }}</textarea>
+            </div>
+            <img src="{{ url_for('static', filename='dataImage/' + row[4]|string) }}" class="w-full h-48 object-cover" style="width: 200px; height: 200px; object-fit: cover;">
+            <input type="hidden" name="image" value="{{ row[4] }}">
+            <input type="hidden" name="id_pro" value="{{ row[5] }}">
+            <div class="flex gap-4 mt-4">
+                <button type="submit" name="action" value="approve" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Đồng ý</button>
+                <button type="submit" name="action" value="reject" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Từ chối</button>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+</div>
+
+            </div>
+        </section>
+    
+        <section id="user-contact-section" style="display: none;">
+            <h2 class="text-lg font-semibold text-gray-700">User Nhờ Liên Hệ</h2>
+            <div class="mt-4">
+                <table class="w-full bg-white shadow rounded">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border">ID Mặt Bằng</th>
+                            <th class="px-4 py-2 border">Tên Khách Hàng</th>
+                            <th class="px-4 py-2 border">Số Điện Thoại</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contact in contacts %}
+                        <tr>
+                            <td class="px-4 py-2 border text-center align-middle">{{ contact[0] }}</td>
+                            <td class="px-4 py-2 border text-center align-middle">{{ contact[1] }}</td>
+                            <td class="px-4 py-2 border text-center align-middle">{{ contact[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>                    
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/accept.js') }}"></script>
+</body>
+</html>
